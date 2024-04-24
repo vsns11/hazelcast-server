@@ -29,6 +29,7 @@ dependencies {
     // Hazelcast dependencies
     implementation 'com.hazelcast:hazelcast:5.3.7'
     implementation 'com.hazelcast:hazelcast-spring:5.3.7'
+    implementation 'com.hazelcast:hazelcast-sql:5.3.7' // Use the appropriate version
 
     // Additional dependencies for testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

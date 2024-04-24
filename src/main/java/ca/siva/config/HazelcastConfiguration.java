@@ -1,31 +1,33 @@
 package ca.siva.config;
 
 
+import ca.siva.mapstore.PostRequestMapStore;
 import com.hazelcast.config.ClasspathYamlConfig;
 import com.hazelcast.config.Config;
-import com.hazelcast.config.MapConfig;
-import com.hazelcast.config.MapStoreConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+
+import com.hazelcast.core.ManagedContext;
+import com.hazelcast.spring.context.SpringManagedContext;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
+
 
 @Configuration
 @Slf4j
-//@EnableConfigurationProperties(HazelcastProperties.class)
 public class HazelcastConfiguration {
-//    private final HazelcastProperties hazelcastProperties;
 
-//    public HazelcastConfiguration(HazelcastProperties hazelcastProperties) {
-//        this.hazelcastProperties = hazelcastProperties;
-//    }
 
     @Bean
-    public Config config(){
+    public SpringManagedContext managedContext() {
+        return new SpringManagedContext();
+    }
 
-        return new ClasspathYamlConfig("hazelcast.yml");
+    @Bean
+    public Config config(ManagedContext managedContext) {
+        Config config = new ClasspathYamlConfig("hazelcast.yml");
+        config.setManagedContext(managedContext);
+        return config;
     }
 
     @Bean

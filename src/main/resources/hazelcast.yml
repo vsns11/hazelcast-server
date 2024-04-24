@@ -1,32 +1,34 @@
 hazelcast:
   cluster-name: hz-cluster
   network:
-#    join:
-#      multicast:
-#        enabled: false
-      #      kubernetes:
-      #        enabled: true
-      #        service-dns: localhost
     rest-api:
       enabled: true
       endpoint-groups:
         HEALTH_CHECK:
           enabled: true
   partition-group:
-    enabled: true
-    group-type: ZONE_AWARE
+    enabled: false
+#    group-type: ZONE_AWARE
   map:
     POST_REQUEST_MAP:
       time-to-live-seconds: 3600
       map-store:
         enabled: true
-        initial-mode: EAGER
+        initial-mode: LAZY
         class-name:  ca.siva.mapstore.PostRequestMapStore
         write-delay-seconds: 10
         write-batch-size: 5
         write-coalescing: true
-#  metrics:
+    default:
+      map-store:
+        enabled: true
   management-center:
     scripting-enabled: true
     console-enabled: true
     data-access-enabled: true
+  cache:
+    default:
+      read-through: false
+      write-through: false
+      eviction:
+        eviction-policy: LRU
